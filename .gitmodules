@@ -4,3 +4,6 @@
 [submodule "client2"]
 	path = client2
 	url = https://github.com/apache/airflow.git
+[submodule "client3"]
+	path = client3
+	url = https://github.com/Ilyassxx99/python.git

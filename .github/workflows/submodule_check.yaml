@@ -1,0 +1,35 @@
+name: Submodule Change Detection
+
+on:
+  push:
+    paths:
+      - '.gitmodules'
+
+jobs:
+  detect-submodule-changes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true  # Checkout submodules as well
+
+      - name: Detect submodule changes
+        id: detect-submodule-changes
+        run: |
+          git submodule update --init --recursive
+          git diff --submodule=log HEAD^ HEAD > submodule_diff.txt
+          if [ -s submodule_diff.txt ]; then
+            echo "Submodule changes detected."
+            echo "changes=true" >> $GITHUB_ENV
+          else
+            echo "No submodule changes detected."
+            echo "changes=false" >> $GITHUB_ENV
+
+      - name: Print result
+        run: |
+          if [ "${{ env.changes }}" == "true" ]; then
+            echo "Submodule changes detected, running subsequent jobs..."
+          else
+            echo "No submodule changes, skipping further actions."
+          fi
