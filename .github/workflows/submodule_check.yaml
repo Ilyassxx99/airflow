@@ -2,11 +2,7 @@ name: Submodule Change Detection
 
 on:
   push:
-    paths:
-      - '.gitmodules'
-      - './client1/**'
-      - './client2/**'
-      - './client3/**'
+
 
 jobs:
   detect-submodule-changes:
