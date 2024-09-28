@@ -17,7 +17,7 @@ jobs:
       - name: Detect submodule changes
         id: detect-submodule-changes
         run: |
-          git submodule update --init --recursive
+          git submodule update --remote --merge
           git diff --submodule=log HEAD^ HEAD > submodule_diff.txt
           if [ -s submodule_diff.txt ]; then
             echo "Submodule changes detected."
